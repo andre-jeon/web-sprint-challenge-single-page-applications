@@ -10,17 +10,14 @@ const NewPizza = (props) => {
     return (
         <div className='user-container'>
             <h2>{details.name}</h2>
-            <p>{details.size}</p>
+            <p>Size: {details.size}</p>
             {
                 !!details.toppings && !!details.toppings.length &&
                 <div>
-                    Toppings:
-                    <ul>
-                        {details.topppings.map((like, idx) => <li key={idx}>{like}</li>)}
-                    </ul>
+                    <p>Choice of toppings: {details.toppings.map((like, idx) => <p key={idx}>{like}</p>)}</p>
                 </div>
             }
-            <p>{details.specialInst}</p>
+            <p>Speical Instruction: {details.specialInst}</p>
         </div>
     )
 }

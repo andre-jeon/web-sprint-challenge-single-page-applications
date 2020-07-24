@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { Switch, Link, Route } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { Link, Route } from 'react-router-dom'
 
 import Form from './Form'
 import Pizza from './Pizza'
@@ -18,7 +18,7 @@ const initialFormValues = {
     steak: false,
     pineapple: false,
   },
-  speicalInst: '',
+  specialInst: '',
 }
 
 const initialFormErrors = {
@@ -35,18 +35,8 @@ const App = () => {
   const [formErrors, setFormErrors] = useState(initialFormErrors)
   const [disabled, setDisabled] = useState(initialDisabled)
 
-  const getNewPizza = () => {
-    axios.get('https://reqres.in/')
-      .then(res => {
-        setPizza(res.data)
-      })
-      .catch(err => {
-        debugger
-      })
-  }
-
   const postNewPizza = newPizza => {
-    axios.post('https://reqres.in/', newPizza)
+    axios.post('https://reqres.in/api/user', newPizza)
       .then(res => {
         setPizza([res.data, ...makePizza])
         setFormValues(initialFormValues)
@@ -82,8 +72,8 @@ const App = () => {
   const checkboxChange = (name, isChecked) => {
     setFormValues({
       ...formValues,
-      hobbies: {
-        ...formValues.hobbies,
+      toppings: {
+        ...formValues.toppings,
         [name]: isChecked,
       }
     })
@@ -94,13 +84,19 @@ const App = () => {
       name: formValues.name.trim(),
       size: formValues.size.trim(),
       toppings: Object.keys(formValues.toppings).filter(tp => formValues.toppings[tp]),
-      speicalInst: formValues.speicalInst.trim(),
+      specialInst: formValues.specialInst.trim(),
     }
 
     postNewPizza(pizza)
   }
 
+  useEffect(() => {
+    formSchema.isValid(formValues).then(valid => {
+      setDisabled(!valid)
+    })
+  }, [formValues])
   
+console.log(formValues)
 
   return (
     <div className="App">
@@ -121,6 +117,14 @@ const App = () => {
         disabled={disabled}
         errors={formErrors}
       />
+
+      {
+        makePizza.map(pizza => {
+          return (
+            <Pizza key={pizza.id} details={pizza} />
+          )
+        })
+      }
 
       <Route path='/pizza'>
         <Pizza props={makePizza} />

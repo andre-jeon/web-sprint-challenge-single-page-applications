@@ -27,7 +27,7 @@ const Form = (props) => {
       }
 
     return (
-        <form classname='form-container' onSubmit={onSubmit}>
+        <form className='form-container' onSubmit={onSubmit}>
             <h2>Customize Your Pizza</h2>
 
             <div className='errors'>
@@ -67,7 +67,7 @@ const Form = (props) => {
                 <label htmlFor='toppingsInput'>Pepperoni:&nbsp;
                 <input
                         type='checkbox'
-                        name='pepperoni'
+                        name='Pepperoni'
                         value={values.toppings.pepperoni === true}
                         onChange={onCheckboxChange}
                     />
@@ -77,7 +77,7 @@ const Form = (props) => {
                 <label htmlFor='toppingsInput'>Steak:&nbsp;
                 <input
                         type='checkbox'
-                        name='steak'
+                        name='Steak'
                         value={values.toppings.steak === true}
                         onChange={onCheckboxChange}
                     />
@@ -87,7 +87,7 @@ const Form = (props) => {
                 <label htmlFor='toppingsInput'>Pineapple:&nbsp;
                 <input
                         type='checkbox'
-                        name='pineapple'
+                        name='Pineapple'
                         value={values.toppings.pineapple === true}
                         onChange={onCheckboxChange}
                     />
